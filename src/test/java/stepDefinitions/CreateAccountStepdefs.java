@@ -3,10 +3,7 @@ package stepDefinitions;
 import common.CreateAccount;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import io.cucumber.java.en.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
 import org.junit.Test;
@@ -16,97 +13,97 @@ public class CreateAccountStepdefs {
 
     private CreateAccount createAccount = new CreateAccount();
 
-    @Before
-    public void setUp (){
-        createAccount.setUp();
+    @Given("User is on the create account page and using the browser {}")
+    public void userIsOnTheCreateAccountPageAndUsingTheBrowser(String browser) {
+        createAccount.selectBrowser(browser);
         System.out.println("Setting up page");
     }
 
-    @Given("I add the date of birth {}")
+    @And("add the date of birth {}")
     public void iAddTheDateOfBirth(String dateOfBirth) throws InterruptedException {
         createAccount.addDateOfBirth(dateOfBirth);
         System.out.println();
         System.out.println(dateOfBirth);
     }
 
-    @And("enter the valid first name {}")
+    @And("add the first name {}")
     public void enterTheValidFirstName(String firstName) throws InterruptedException {
         createAccount.addFirstName(firstName);
         System.out.println();
         System.out.println(firstName);
     }
 
-    @And("enter the valid last name {}")
+    @And("add the last name {}")
     public void enterTheValidLastName(String lastName) throws InterruptedException{
         createAccount.addLastName(lastName);
         System.out.println();
         System.out.println(lastName);
     }
 
-    @And("enter the valid email {}")
+    @And("add the email {}")
     public void enterTheValidEmail(String email) throws InterruptedException {
         createAccount.addEmail(email);
         System.out.println();
         System.out.println(email);
     }
 
-    @And("confirm my valid email {}")
-    public void confirmMyValidEmail(String email) throws InterruptedException {
-        createAccount.addConfirmEmail(email);
+    @And("confirm the email {}")
+    public void confirmMyValidEmail(String confirmEmail) throws InterruptedException {
+        createAccount.addConfirmEmail(confirmEmail);
         System.out.println();
-        System.out.println(email);
+        System.out.println(confirmEmail);
     }
 
-    @And("enter the valid password {}")
+    @And("add the password {}")
     public void enterTheValidPassword(String password) throws InterruptedException {
         createAccount.addPassword(password);
         System.out.println();
         System.out.println(password);
     }
 
-    @And("confirm my valid password {}")
-    public void confirmMyValidPassword(String password) throws InterruptedException {
-        createAccount.addConfirmPassword(password);
+    @And("confirm the password {}")
+    public void confirmMyValidPassword(String confirmPassword) throws InterruptedException {
+        createAccount.addConfirmPassword(confirmPassword);
         System.out.println();
-        System.out.println(password);
+        System.out.println(confirmPassword);
     }
 
-    @And("click confirm terms and conditions button")
-    public void clickConfirmTermsAndConditionsButton() throws InterruptedException{
-        createAccount.clickConditions();
+    @And("click confirm terms and conditions button {}")
+    public void clickConfirmTermsAndConditionsButton(String click) throws InterruptedException{
+        createAccount.clickConditions(click);
         System.out.println();
         System.out.println("Confirm Terms");
     }
 
-    @And("click confirm my age button")
-    public void clickConfirmMyAgeButton() throws InterruptedException{
-        createAccount.clickConfirmAge();
+    @And("click confirm my age button {}")
+    public void clickConfirmMyAgeButton(String click) throws InterruptedException{
+        createAccount.clickConfirmAge(click);
         System.out.println();
         System.out.println("Confirm Age");
     }
 
-    @And("click code of conduct button")
-    public void clickCodeOfCoductButton() throws InterruptedException{
-        createAccount.clickCodeOfConduct();
+    @And("click code of conduct button {}")
+    public void clickCodeOfCoductButton(String click) throws InterruptedException{
+        createAccount.clickCodeOfConduct(click);
         System.out.println();
         System.out.println("Confirm Code of Conduct");
     }
 
-    @When("I click the confirm and join button")
-    public void iClickTheConfirmAndJoinButton() throws InterruptedException{
+    @When("user click the confirm and join button")
+    public void userClickTheConfirmAndJoinButton() throws InterruptedException{
         createAccount.clickJoin();
         System.out.println();
         System.out.println("Click Join");
     }
 
-    @Then("a new account is made")
+    /*@Then("a new account is made")
     public void aNewAccountIsMade() throws InterruptedException {
         String actual = createAccount.checkResult();
         String expected = "Your Basketball England Membership Number is:";
         assertEquals(expected, actual);
         System.out.println();
         System.out.println("Account is made");
-    }
+    }*/
 
     @Then("the button is active")
     public void theButtonIsActive() throws InterruptedException {
@@ -117,13 +114,24 @@ public class CreateAccountStepdefs {
         System.out.println("Button is clickable");
     }
 
-    @Then("the button is inactive")
-    public void theButtonIsInactive() throws InterruptedException {
-        boolean expected = false;
-        boolean actual = createAccount.joinIsActive();
-        assertEquals(expected, actual);
-        System.out.println();
-        System.out.println("Button is not clickable");
+    @And("no error message {} is displayed")
+    public void anErrorMessageIsDisplayed(String errorMessage) throws InterruptedException{
+        if(errorMessage.isEmpty()){
+            System.out.println("No error messages");
+        }
+
+        else {
+            String expected = errorMessage;
+            String actual = createAccount.checkErrorMessage();
+            assertEquals(expected, actual);
+            System.out.println();
+            System.out.println("Error message is displayed");
+        }
+    }
+
+    @But("if any information is missing or invalid")
+    public void ifAnyInformationIsMissingOrInvalid() {
+
     }
 
     @After

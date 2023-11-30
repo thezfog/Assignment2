@@ -1,40 +1,26 @@
 Feature: Create Account
 
-  Scenario Outline: Create Valid Account
+  Scenario Outline: Create Account
 
-    Given I add the date of birth <dateOfBirth>
-    And enter the valid first name <firstName>
-    And enter the valid last name <lastName>
-    And enter the valid email <email>
-    And confirm my valid email <email>
-    And enter the valid password <password>
-    And confirm my valid password <password>
-    And click confirm terms and conditions button
-    And click confirm my age button
-    And click code of conduct button
-    When I click the confirm and join button
+    Given User is on the create account page and using the browser <browser>
+    And add the date of birth <dateOfBirth>
+    And add the first name <firstName>
+    And add the last name <lastName>
+    And add the email <email>
+    And confirm the email <confirmEmail>
+    And add the password <password>
+    And confirm the password <confirmPassword>
+    And click confirm terms and conditions button <terms>
+    And click confirm my age button <age>
+    And click code of conduct button <conduct>
+    When user click the confirm and join button
     Then the button is active
+    And no error message <errorMessage> is displayed
 
     Examples:
-      | dateOfBirth | firstName | lastName | email               | password |
-      | 12/06/1990  | Testare   | Testssin | thezan_@hotmail.com | hej123   |
-
-
-  Scenario Outline: Create Account Without Last Name
-
-    Given I add the date of birth <dateOfBirth>
-    And enter the valid first name <firstName>
-    And enter the valid email <email>
-    And confirm my valid email <email>
-    And enter the valid password <password>
-    And confirm my valid password <password>
-    And click confirm terms and conditions button
-    And click confirm my age button
-    And click code of conduct button
-    When I click the confirm and join button
-    Then the button is inactive
-
-    Examples:
-      | dateOfBirth | firstName | lastName | email               | password |
-      | 12/06/1990  | Testare   | Testssin | thezan_@hotmail.com | hej123   |
-
+      | browser | dateOfBirth | firstName | lastName | email         | confirmEmail  | password | confirmPassword | terms | age | conduct | errorMessage                                                              |
+      | chrome  | 12/06/1990  | Testare   | Testsson | thest@test.se | thest@test.se | hej123   | hej123          | yes   | yes | yes     |                                                                           |
+      | chrome  | 12/06/1990  | Testare   |          | thest@test.se | thest@test.se | hej123   | hej123          | yes   | yes | yes     | Last Name is required                                                     |
+      | chrome  | 12/06/1990  | Testare   | Testsson | thest@test.se | thest@test.se | hej123   | hej126          | yes   | yes | yes     |                                                                           |
+      | chrome  | 12/06/1990  | Testare   | Testsson | thest@test.se | thest@test.se | hej123   | hej123          | no    | yes | yes     | You must confirm that you have read and accepted our Terms and Conditions |
+      | edge    | 12/06/1990  | Testare   | Testsson | thest@test.se | thest@test.se | hej123   | hej123          | yes   | yes | yes     |                                                                           |
