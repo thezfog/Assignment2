@@ -89,11 +89,6 @@ public class CreateAccount {
         button.click();
     }
 
-    /*public String checkResult() throws InterruptedException {
-        WebElement result = driver.findElement(By.cssSelector(".warning > span"));
-        return result.getText();
-    }*/
-
     public boolean joinIsActive() throws InterruptedException {
         WebElement button = driver.findElement(By.name("join"));
         return button.isEnabled();
