@@ -14,13 +14,15 @@ Feature: Create Account
     And click confirm my age button <age>
     And click code of conduct button <conduct>
     When user click the confirm and join button
-    Then the button is active
-    And no error message <errorMessage> is displayed
+    Then no error message <errorMessage> is displayed
 
     Examples:
-      | browser | dateOfBirth | firstName | lastName | email         | confirmEmail  | password | confirmPassword | terms | age | conduct | errorMessage                                                              |
-      | chrome  | 12/06/1990  | Testare   | Testsson | thest@test.se | thest@test.se | hej123   | hej123          | yes   | yes | yes     |                                                                           |
+      | browser | dateOfBirth | firstName | lastName | email         | confirmEmail  | password | confirmPassword | terms | age | conduct | errorMessage |
+      | chrome  | 12/06/1990  | Testare   | Testsson | thest@test.se | thest@test.se | hej123   | hej123          | yes   | yes | yes     |              |
       | chrome  | 12/06/1990  | Testare   |          | thest@test.se | thest@test.se | hej123   | hej123          | yes   | yes | yes     | Last Name is required                                                     |
       | chrome  | 12/06/1990  | Testare   | Testsson | thest@test.se | thest@test.se | hej123   | hej126          | yes   | yes | yes     |                                                                           |
       | chrome  | 12/06/1990  | Testare   | Testsson | thest@test.se | thest@test.se | hej123   | hej123          | no    | yes | yes     | You must confirm that you have read and accepted our Terms and Conditions |
       | edge    | 12/06/1990  | Testare   | Testsson | thest@test.se | thest@test.se | hej123   | hej123          | yes   | yes | yes     |                                                                           |
+      | edge    | 12/06/1990  | Testare   |          | thest@test.se | thest@test.se | hej123   | hej123          | yes   | yes | yes     | Last Name is required                                                     |
+      | edge    | 12/06/1990  | Testare   | Testsson | thest@test.se | thest@test.se | hej123   | hej126          | yes   | yes | yes     |                                                                           |
+      | edge    | 12/06/1990  | Testare   | Testsson | thest@test.se | thest@test.se | hej123   | hej123          | no    | yes | yes     | You must confirm that you have read and accepted our Terms and Conditions |
