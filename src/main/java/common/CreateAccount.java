@@ -5,6 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class CreateAccount {
 
@@ -76,7 +80,6 @@ public class CreateAccount {
             return;
     }
 
-
     //Methods finds and clicks on the confirm age button
     public void clickConfirmAge(String click) {
         if(click.equals("yes")) {
@@ -86,7 +89,6 @@ public class CreateAccount {
         else
             return;
     }
-
 
     //Methods finds and clicks on the confirm code of conduct button
     public void clickCodeOfConduct(String click) {
@@ -98,7 +100,6 @@ public class CreateAccount {
             return;
     }
 
-
     //Methods finds and clicks on the join button
     public void clickJoin() {
         WebElement button = driver.findElement(By.name("join"));
@@ -107,13 +108,18 @@ public class CreateAccount {
 
     //Methods finds and returns error messages
     public String checkErrorMessage() {
+        waitForElement(By.className("field-validation-error"));
         WebElement message = driver.findElement(By.className("field-validation-error"));
         return message.getText();
+    }
+
+    //Method for explicit wait
+    private void waitForElement(By element) {
+        new WebDriverWait(driver,Duration.ofSeconds(5)).until(ExpectedConditions.presenceOfAllElementsLocatedBy(element));
     }
 
     //Method closes the page
     public void tearDown() {
         driver.close();
     }
-
 }
