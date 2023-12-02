@@ -1,95 +1,113 @@
 package stepDefinitions;
 
 import common.CreateAccount;
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import static org.junit.Assert.assertEquals;
 
 public class CreateAccountStepdefs {
 
-    private CreateAccount createAccount;
-    @Given("I add the date of birth {}")
-    public void iAddTheDateOfBirth(String dateOfBirth) {
-        //createAccount.addDateOfBirth();
+    private CreateAccount createAccount = new CreateAccount();
+
+    @Given("User is on the create account page and using the browser {}")
+    public void userIsOnTheCreateAccountPageAndUsingTheBrowser(String browser) {
+        createAccount.selectBrowser(browser);
+        System.out.println("Selecting browser");
+    }
+
+    @And("adds the date of birth {}")
+    public void addTheDateOfBirth(String dateOfBirth) {
+        createAccount.addDateOfBirth(dateOfBirth);
         System.out.println();
         System.out.println(dateOfBirth);
     }
 
-    @And("enter the valid first name {}")
+    @And("adds the first name {}")
     public void enterTheValidFirstName(String firstName) {
-        //createAccount.addFirstName();
+        createAccount.addFirstName(firstName);
         System.out.println();
         System.out.println(firstName);
     }
 
-    @And("enter the valid last name {}")
+    @And("adds the last name {}")
     public void enterTheValidLastName(String lastName) {
-        //createAccount.addLastName();
+        createAccount.addLastName(lastName);
         System.out.println();
         System.out.println(lastName);
     }
 
-    @And("enter the valid email {}")
+    @And("adds the email {}")
     public void enterTheValidEmail(String email) {
-        //createAccount.addEmail();
+        createAccount.addEmail(email);
         System.out.println();
         System.out.println(email);
     }
 
-    @And("confirm my valid email {}")
-    public void confirmMyValidEmail(String email) {
-        //createAccount.addConfirmEmail();
+    @And("confirms the email {}")
+    public void confirmMyValidEmail(String confirmEmail) {
+        createAccount.addConfirmEmail(confirmEmail);
         System.out.println();
-        System.out.println(email);
+        System.out.println(confirmEmail);
     }
 
-    @And("enter the valid password {}")
+    @And("adds the password {}")
     public void enterTheValidPassword(String password) {
-        //createAccount.addPassword();
+        createAccount.addPassword(password);
         System.out.println();
         System.out.println(password);
     }
 
-    @And("confirm my valid password {}")
-    public void confirmMyValidPassword(String password) {
-        //createAccount.addConfirmPassword();
+    @And("confirms the password {}")
+    public void confirmMyValidPassword(String confirmPassword) {
+        createAccount.addConfirmPassword(confirmPassword);
         System.out.println();
-        System.out.println(password);
+        System.out.println(confirmPassword);
     }
 
-    @And("click confirm terms and conditions button")
-    public void clickConfirmTermsAndConditionsButton() {
-        //createAccount.clickConditions();
+    @And("clicks confirm terms and conditions button {}")
+    public void clickConfirmTermsAndConditionsButton(String click) {
+        createAccount.clickConditions(click);
         System.out.println();
         System.out.println("Confirm Terms");
     }
 
-    @And("click confirm my age button")
-    public void clickConfirmMyAgeButton() {
-        //createAccount.clickConfirmAge();
+    @And("clicks confirm age button {}")
+    public void clickConfirmMyAgeButton(String click) {
+        createAccount.clickConfirmAge(click);
         System.out.println();
         System.out.println("Confirm Age");
     }
 
-    @And("click code of conduct button")
-    public void clickCodeOfCoductButton() {
-        //createAccount.clickCodeOfConduct();
+    @And("clicks code of conduct button {}")
+    public void clickCodeOfCoductButton(String click) {
+        createAccount.clickCodeOfConduct(click);
         System.out.println();
         System.out.println("Confirm Code of Conduct");
     }
 
-    @When("I click the confirm and join button")
-    public void iClickTheConfirmAndJoinButton() {
-        //createAccount.clickJoin();
+    @When("user clicks the confirm and join button")
+    public void userClickTheConfirmAndJoinButton() {
+        createAccount.clickJoin();
         System.out.println();
         System.out.println("Click Join");
     }
 
-    @Then("a new account is made")
-    public void aNewAccountIsMade() {
+    @Then("a new account is made and no error message {} is displayed")
+    public void anErrorMessageIsDisplayed(String errorMessage) {
+        if(!errorMessage.isEmpty()) {
+            String expected = errorMessage;
+            String actual = createAccount.checkErrorMessage();
+            assertEquals(expected, actual);
+            System.out.println();
+            System.out.println("Error message is displayed");
+        }
+    }
 
-        System.out.println();
-        System.out.println("Account is made");
+    @After
+    public void tearDown() {
+        createAccount.tearDown();
     }
 }

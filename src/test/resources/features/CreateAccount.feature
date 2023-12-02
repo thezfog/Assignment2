@@ -1,20 +1,28 @@
 Feature: Create Account
 
   Scenario Outline: Create Account
-    Given I add the date of birth <dateOfBirth>
-    And enter the valid first name <firstName>
-    And enter the valid last name <lastName>
-    And enter the valid email <email>
-    And confirm my valid email <email>
-    And enter the valid password <password>
-    And confirm my valid password <password>
-    And click confirm terms and conditions button
-    And click confirm my age button
-    And click code of conduct button
-    When I click the confirm and join button
-    Then a new account is made
+
+    Given User is on the create account page and using the browser <browser>
+    And adds the date of birth <dateOfBirth>
+    And adds the first name <firstName>
+    And adds the last name <lastName>
+    And adds the email <email>
+    And confirms the email <confirmEmail>
+    And adds the password <password>
+    And confirms the password <confirmPassword>
+    And clicks confirm terms and conditions button <terms>
+    And clicks confirm age button <age>
+    And clicks code of conduct button <conduct>
+    When user clicks the confirm and join button
+    Then a new account is made and no error message <errorMessage> is displayed
 
     Examples:
-      | dateOfBirth | firstName | lastName | email               | password |
-      | 12/06/1990  | Testare   | Testsson | thezan_@hotmail.com | hej123   |
-
+      | browser | dateOfBirth | firstName | lastName | email        | confirmEmail | password | confirmPassword | terms | age | conduct | errorMessage                                                              |
+      | chrome  | 12/06/1990  | Testare   | Testsson | test@test.se | test@test.se | matching | matching        | yes   | yes | yes     |                                                                           |
+      | chrome  | 12/06/1990  | Testare   |          | test@test.se | test@test.se | matching | matching        | yes   | yes | yes     | Last Name is required                                                     |
+      | chrome  | 12/06/1990  | Testare   | Testsson | test@test.se | test@test.se | matching | notMatching     | yes   | yes | yes     | Password did not match                                                    |
+      | chrome  | 12/06/1990  | Testare   | Testsson | test@test.se | test@test.se | matching | matching        | no    | yes | yes     | You must confirm that you have read and accepted our Terms and Conditions |
+      | edge    | 12/06/1990  | Testare   | Testsson | test@test.se | test@test.se | matching | matching        | yes   | yes | yes     |                                                                           |
+      | edge    | 12/06/1990  | Testare   |          | test@test.se | test@test.se | matching | matching        | yes   | yes | yes     | Last Name is required                                                     |
+      | edge    | 12/06/1990  | Testare   | Testsson | test@test.se | test@test.se | matching | notMatching     | yes   | yes | yes     | Password did not match                                                    |
+      | edge    | 12/06/1990  | Testare   | Testsson | test@test.se | test@test.se | matching | matching        | no    | yes | yes     | You must confirm that you have read and accepted our Terms and Conditions |
